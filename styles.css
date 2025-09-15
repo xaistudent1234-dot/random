@@ -1,0 +1,338 @@
+
+/* --- Base Reset --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background: url(Images/Jupiter.png);
+  position: relative;
+  font-family: 'Lato', sans-serif;
+  padding-top: 4rem; /* space for navbar */
+  color: #fff;
+}
+
+/* --- Navbar --- */
+.navbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 4rem;
+  padding: 0 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  backdrop-filter: blur(6px);
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.nav-links li a:hover,
+.nav-links li a:focus {
+  background: #baffc9;
+  color: #222;
+  box-shadow: 0 2px 8px rgba(186,255,201,0.3);
+  outline: none;
+}
+
+.slideshow {
+  position: relative;
+  width: 100%;
+  overflow: hidden; /* hides extra images */
+  background: transparent; /* optional, background color */
+  height: 100px; /* adjust to your image height */
+  padding: 0.5rem;
+  margin-top: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.slider {
+  display: flex;
+  width: max-content; /* lets flex size to content */
+  animation: ticker 150s linear infinite; /* speed & loop */
+  will-change: transform; /* force animation to start immediately */
+  animation-delay: -65s; /* skip first 40s of motion */
+}
+
+.slider img {
+  border-radius: 80%;
+}
+
+.ticker-item {
+  height: 100px;  /* keep consistent image size */
+  margin-right: 20px; /* space between images */
+}
+
+@keyframes ticker {
+  0% {
+    transform: translateX(100%); /* start off-screen right */
+  }
+  100% {
+    transform: translateX(-100%); /* move completely left */
+  }
+}
+
+
+/* --- Title --- */
+.title h1 {
+  font-size: 2rem;
+  margin: 3rem auto 1rem;
+  text-align: center;
+
+  /* Gradient text */
+  background: -webkit-linear-gradient(#eee, #333);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 6px 6px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Header Section (images) --- */
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin: auto;
+}
+
+.crumb_banner_name {
+  max-width: 90%;
+  height: 2rem;
+  z-index: 10;
+  margin: 0;
+}
+
+.crumb_header_gif {
+  max-width: 100px;
+  margin: 1rem;
+  padding: 0;
+  margin-top: 1rem;
+  z-index: 10;
+}
+
+.spaceship_gif {
+  max-width: 100px;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+}
+
+/* --- Middle Section --- */
+.middle_section_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 auto;
+}
+
+/* --- Cards --- */
+.card.sharp-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0;
+  width: 100%;
+  max-width: 700px;
+  backdrop-filter: blur(12px);
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+}
+
+.card.sharp-card h2,
+.card.sharp-card p {
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+}
+
+.card-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+.button {
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s ease, transform 0.2s ease;
+  letter-spacing: 0.2rem;
+  padding: 10px;
+}
+
+.button-link {
+  background: white;
+  color: black;
+}
+
+.button-link:hover {
+  background: #00a773;
+  transform: scale(1.05);
+}
+
+/* --- Track Card --- */
+.track-card {
+  border-radius: 12px;
+  padding: 10px;
+  margin: 1rem auto;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  max-width: 700px;
+}
+
+.track-card h2 {
+  padding: 10px;
+}
+
+.track-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.track-links img {
+  width: 40px;
+  border-radius: 7px;
+  border: solid beige;
+  padding: 6px;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.track-links img:hover {
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 6px #fff);
+}
+
+
+/* --- Meme Card --- */
+.meme-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 10px;
+  margin: 2rem auto;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  max-width: 1000px;
+}
+
+.meme-card h2 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.meme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.meme-grid img,
+.meme-grid video {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+  display: block;
+  background: #000;
+  cursor: pointer;
+}
+
+/* --- Background Animation --- */
+.stars, .twinkling, .clouds {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stars {
+  background: #000 url(Images/stars.png) repeat top center;
+}
+
+.clouds {
+  background: transparent url(Images/clouds.png) repeat top center;
+  opacity: .4;
+  animation: move-clouds-back 200s linear infinite;
+}
+
+@keyframes move-clouds-back {
+  from { background-position: 0 0; }
+  to { background-position: 10000px 0; }
+}
+
+/* --- Media Queries (scale up) --- */
+@media (min-width: 600px) {
+  .title h1 {
+    font-size: 2.5rem;
+    margin-top: 4rem;
+  }
+  .nav-links li a {
+    font-size: 1.25rem;
+  }
+  .track-links img {
+    width: 60px;
+    padding: 10px;
+  }
+  .ca {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .middle_section_container {
+    flex-direction: row;
+    justify-content: center;
+    gap: 40px;
+  }
+  .card-section {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .meme-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .title h1 {
+    font-size: 3.5rem;
+  }
+  .nav-links li a {
+    font-size: 1.5rem;
+  }
+  .card.sharp-card h2,
+  .card.sharp-card p {
+    font-size: 1.25rem;
+  }
+}
