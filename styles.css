@@ -140,6 +140,10 @@ body {
   width: 100%;
 }
 
+.video_container {
+  margin-left: 25%;
+}
+
 .video {
   width: 40%; 
   height: 25%;
