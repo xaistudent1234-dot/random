@@ -1185,9 +1185,24 @@ footer p {
     gap: 0.5rem 1rem;
   }
 
+  .track-links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .track-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .track-links img {
-    width: clamp(13%, 10vw, 13%);
-    padding: 10px;
+    width: 42px;
+    height: 42px;
+    padding: 7px;
   }
 
   .center_item img:not([alt="CrumbGif"]) {
