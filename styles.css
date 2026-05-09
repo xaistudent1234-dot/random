@@ -1174,13 +1174,15 @@ footer p {
   }
 
   .navbar {
-    flex-direction: column;
+    flex-direction: row;
     width: 95%;
   }
   
   .menu {
-    flex-direction: column;
-    gap: 0.75rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem 1rem;
   }
 
   .track-links img {
@@ -1199,17 +1201,17 @@ footer p {
 
   /* Show Copy CA button on mobile */
   .copy-ca-btn {
-    display: block;
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto 1.5rem auto;
-    padding: 1rem 2rem;
+    display: inline-block;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0.75rem 1.5rem;
     background: linear-gradient(135deg, rgba(147, 51, 234, 0.8) 0%, rgba(0, 200, 255, 0.8) 100%);
     border: 2px solid rgba(0, 200, 255, 0.4);
     border-radius: 12px;
     color: #fff;
     font-family: 'Planet Comic', sans-serif;
-    font-size: clamp(16px, 4vw, 20px);
+    font-size: clamp(14px, 3.5vw, 18px);
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1241,12 +1243,6 @@ footer p {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-  }
-
-  .copy-ca-btn {
-    width: auto;
-    max-width: none;
-    margin: 0;
   }
 
   .section1, .section3, .section5 {
