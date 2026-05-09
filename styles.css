@@ -1161,6 +1161,18 @@ footer p {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .navSection {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+
+  .bgNavSec1 {
+    padding-top: 3.5rem;
+  }
+
   .navbar {
     flex-direction: column;
     width: 95%;
@@ -1174,6 +1186,10 @@ footer p {
   .track-links img {
     width: clamp(13%, 10vw, 13%);
     padding: 10px;
+  }
+
+  .center_item img:not([alt="CrumbGif"]) {
+    display: none;
   }
 
   /* Hide full contract address on mobile */
@@ -1220,7 +1236,17 @@ footer p {
   }
 
   .track-card {
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .copy-ca-btn {
+    width: auto;
+    max-width: none;
+    margin: 0;
   }
 
   .section1, .section3, .section5 {
@@ -1257,6 +1283,10 @@ footer p {
     width: 100%;
     height: 100%;
     border: 0;
+  }
+
+  #bubblemaps-embed {
+    display: none;
   }
 }
 
