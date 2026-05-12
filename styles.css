@@ -1,4 +1,8 @@
 /* Reset and base styles */
+html {
+  background-color: #050a14;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -157,7 +161,7 @@ body::before {
     linear-gradient(135deg, rgba(0, 0, 0, 0.92) 0%, rgba(10, 25, 47, 0.88) 50%, rgba(0, 0, 0, 0.92) 100%);
   justify-content: center;
   align-items: center;
-  gap: 0.1rem;
+  gap: clamp(1rem, 3vw, 2rem);
   padding: clamp(1rem, 4vw, 3rem);
   max-width: 100%;
   width: 100%;
@@ -198,7 +202,7 @@ body::before {
   justify-content: center;
   align-items: center;
   max-width: 900px;
-  gap: 1.5rem;
+  gap: 3rem;
   background: linear-gradient(145deg, #0a0e1a 0%, #141b2e 100%);
   border-radius: 12px;
   padding: 1rem;
