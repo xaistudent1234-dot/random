@@ -1174,7 +1174,7 @@ footer p {
   }
 
   .bgNavSec1 {
-    padding-top: 3.5rem;
+    padding-top: 9rem;
   }
 
   .navbar {
@@ -1211,6 +1211,14 @@ footer p {
 
   .center_item img:not([alt="CrumbGif"]) {
     display: none;
+  }
+
+  .section1_combined {
+    gap: 0.5rem;
+  }
+
+  .center_item img {
+    margin-top: 0;
   }
 
   /* Hide full contract address on mobile */
@@ -1300,6 +1308,13 @@ footer p {
     border: 0;
   }
 
+  #dexscreener-embed {
+    height: 28rem;
+    width: 100%;
+    max-width: 100%;
+    padding: 1rem;
+  }
+
   #bubblemaps-embed {
     display: none;
   }
@@ -1311,9 +1326,10 @@ footer p {
   }
 
   #dexscreener-embed {
-    height: 30rem;
+    height: 22rem;
     width: 100%;
-    max-width: 40rem;
+    max-width: 100%;
+    padding: 0.75rem;
   }
 
   .scroll-top-btn {
