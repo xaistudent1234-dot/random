@@ -1115,7 +1115,7 @@ footer p {
   min-height: 40vh;
   overflow: visible;
   background: transparent;
-  border-radius: 0;
+  border-radius: 12px;
   padding: 0;
   box-shadow: none;
   position: relative;
@@ -1143,6 +1143,8 @@ footer p {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .slides img {
@@ -1152,9 +1154,11 @@ footer p {
   width: 100%;
   min-width: 100%;
   min-height: 40vh;
+  border-radius: 8px;
   object-fit: contain;
   object-position: center;
   opacity: 0;
+  border-radius: 12px;
   transition: opacity 1s ease-in-out, filter 0.3s ease;
 }
 
