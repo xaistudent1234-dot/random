@@ -1344,3 +1344,441 @@ footer p {
     font-size: 18px;
   }
 }
+
+/* Seasonal Theme Profiles */
+body.theme-summer,
+body.theme-winter,
+body.theme-autumn,
+body.theme-spring {
+  --season-text: #fff7df;
+  --season-sky-top: #083c70;
+  --season-sky-mid: #1d6aa8;
+  --season-sky-bottom: #f6c65b;
+  --season-glow-a: rgba(255, 213, 74, 0.18);
+  --season-glow-b: rgba(56, 189, 248, 0.12);
+  --season-glow-c: rgba(251, 146, 60, 0.14);
+  --season-panel: linear-gradient(145deg, rgba(14, 56, 97, 0.9) 0%, rgba(9, 27, 51, 0.9) 100%);
+  --season-panel-border: rgba(254, 215, 102, 0.38);
+  --season-panel-shadow: rgba(14, 165, 233, 0.22);
+  --season-highlight: #fbbf24;
+  --season-accent: #38bdf8;
+  --season-secondary: #fb923c;
+  --season-soft-bg: rgba(14, 56, 97, 0.58);
+  --season-chip-bg: rgba(251, 191, 36, 0.16);
+  --season-chip-border: rgba(251, 191, 36, 0.45);
+}
+
+body.theme-summer {
+  --season-text: #fff8ea;
+  --season-sky-top: #0a4d8f;
+  --season-sky-mid: #2d8fd2;
+  --season-sky-bottom: #ffd166;
+  --season-glow-a: rgba(255, 222, 89, 0.24);
+  --season-glow-b: rgba(34, 211, 238, 0.15);
+  --season-glow-c: rgba(251, 146, 60, 0.2);
+  --season-panel: linear-gradient(145deg, rgba(12, 64, 113, 0.92) 0%, rgba(9, 35, 66, 0.92) 100%);
+  --season-panel-border: rgba(255, 214, 102, 0.5);
+  --season-panel-shadow: rgba(14, 165, 233, 0.26);
+  --season-highlight: #facc15;
+  --season-accent: #22d3ee;
+  --season-secondary: #fb923c;
+  --season-soft-bg: rgba(12, 64, 113, 0.6);
+  --season-chip-bg: rgba(250, 204, 21, 0.18);
+  --season-chip-border: rgba(250, 204, 21, 0.5);
+}
+
+body.theme-winter {
+  --season-text: #eff6ff;
+  --season-sky-top: #0b1b34;
+  --season-sky-mid: #1f3b62;
+  --season-sky-bottom: #7dd3fc;
+  --season-glow-a: rgba(125, 211, 252, 0.18);
+  --season-glow-b: rgba(165, 180, 252, 0.13);
+  --season-glow-c: rgba(226, 232, 240, 0.1);
+  --season-panel: linear-gradient(145deg, rgba(15, 30, 54, 0.9) 0%, rgba(20, 52, 92, 0.9) 100%);
+  --season-panel-border: rgba(186, 230, 253, 0.45);
+  --season-panel-shadow: rgba(125, 211, 252, 0.25);
+  --season-highlight: #bae6fd;
+  --season-accent: #a5b4fc;
+  --season-secondary: #67e8f9;
+  --season-soft-bg: rgba(20, 52, 92, 0.6);
+  --season-chip-bg: rgba(186, 230, 253, 0.15);
+  --season-chip-border: rgba(186, 230, 253, 0.4);
+}
+
+body.theme-autumn {
+  --season-text: #fff7ed;
+  --season-sky-top: #3d1f1a;
+  --season-sky-mid: #7c3a1e;
+  --season-sky-bottom: #f59e0b;
+  --season-glow-a: rgba(245, 158, 11, 0.2);
+  --season-glow-b: rgba(249, 115, 22, 0.14);
+  --season-glow-c: rgba(180, 83, 9, 0.16);
+  --season-panel: linear-gradient(145deg, rgba(92, 44, 24, 0.92) 0%, rgba(61, 31, 26, 0.92) 100%);
+  --season-panel-border: rgba(251, 191, 36, 0.42);
+  --season-panel-shadow: rgba(234, 88, 12, 0.26);
+  --season-highlight: #f59e0b;
+  --season-accent: #fb923c;
+  --season-secondary: #f97316;
+  --season-soft-bg: rgba(92, 44, 24, 0.6);
+  --season-chip-bg: rgba(249, 115, 22, 0.16);
+  --season-chip-border: rgba(249, 115, 22, 0.45);
+}
+
+body.theme-spring {
+  --season-text: #f7fee7;
+  --season-sky-top: #14532d;
+  --season-sky-mid: #16a34a;
+  --season-sky-bottom: #86efac;
+  --season-glow-a: rgba(134, 239, 172, 0.2);
+  --season-glow-b: rgba(74, 222, 128, 0.14);
+  --season-glow-c: rgba(253, 224, 71, 0.16);
+  --season-panel: linear-gradient(145deg, rgba(20, 83, 45, 0.9) 0%, rgba(22, 101, 52, 0.9) 100%);
+  --season-panel-border: rgba(163, 230, 53, 0.45);
+  --season-panel-shadow: rgba(74, 222, 128, 0.26);
+  --season-highlight: #a3e635;
+  --season-accent: #4ade80;
+  --season-secondary: #fde047;
+  --season-soft-bg: rgba(22, 101, 52, 0.6);
+  --season-chip-bg: rgba(163, 230, 53, 0.15);
+  --season-chip-border: rgba(163, 230, 53, 0.45);
+}
+
+body.theme-summer,
+body.theme-winter,
+body.theme-autumn,
+body.theme-spring {
+  color: var(--season-text);
+  background:
+    linear-gradient(180deg,
+      var(--season-sky-top) 0%,
+      var(--season-sky-mid) 42%,
+      var(--season-sky-bottom) 100%);
+}
+
+body.theme-summer::before,
+body.theme-winter::before,
+body.theme-autumn::before,
+body.theme-spring::before {
+  background:
+    radial-gradient(circle at 85% 12%, var(--season-glow-a) 0%, transparent 32%),
+    radial-gradient(circle at 14% 72%, var(--season-glow-b) 0%, transparent 40%),
+    radial-gradient(circle at 50% 30%, var(--season-glow-c) 0%, transparent 45%);
+}
+
+body.theme-summer .bgNavSec1,
+body.theme-winter .bgNavSec1,
+body.theme-autumn .bgNavSec1,
+body.theme-spring .bgNavSec1,
+body.theme-summer .section1,
+body.theme-winter .section1,
+body.theme-autumn .section1,
+body.theme-spring .section1,
+body.theme-summer .section3,
+body.theme-winter .section3,
+body.theme-autumn .section3,
+body.theme-spring .section3,
+body.theme-summer .section5,
+body.theme-winter .section5,
+body.theme-autumn .section5,
+body.theme-spring .section5,
+body.theme-summer .section6,
+body.theme-winter .section6,
+body.theme-autumn .section6,
+body.theme-spring .section6 {
+  background-blend-mode: multiply;
+}
+
+body.theme-summer .navSection,
+body.theme-winter .navSection,
+body.theme-autumn .navSection,
+body.theme-spring .navSection {
+  background: var(--season-soft-bg);
+  border-bottom-color: var(--season-panel-border);
+}
+
+body.theme-summer .navbar,
+body.theme-winter .navbar,
+body.theme-autumn .navbar,
+body.theme-spring .navbar,
+body.theme-summer .section1_combined,
+body.theme-winter .section1_combined,
+body.theme-autumn .section1_combined,
+body.theme-spring .section1_combined,
+body.theme-summer #dexscreener-embed,
+body.theme-winter #dexscreener-embed,
+body.theme-autumn #dexscreener-embed,
+body.theme-spring #dexscreener-embed,
+body.theme-summer #integrated-terminal,
+body.theme-winter #integrated-terminal,
+body.theme-autumn #integrated-terminal,
+body.theme-spring #integrated-terminal,
+body.theme-summer #bubblemaps-embed,
+body.theme-winter #bubblemaps-embed,
+body.theme-autumn #bubblemaps-embed,
+body.theme-spring #bubblemaps-embed,
+body.theme-summer .track-card,
+body.theme-winter .track-card,
+body.theme-autumn .track-card,
+body.theme-spring .track-card,
+body.theme-summer .meme-card,
+body.theme-winter .meme-card,
+body.theme-autumn .meme-card,
+body.theme-spring .meme-card,
+body.theme-summer .gifs-on-x-banner,
+body.theme-winter .gifs-on-x-banner,
+body.theme-autumn .gifs-on-x-banner,
+body.theme-spring .gifs-on-x-banner,
+body.theme-summer footer,
+body.theme-winter footer,
+body.theme-autumn footer,
+body.theme-spring footer {
+  background: var(--season-panel);
+  border-color: var(--season-panel-border);
+  box-shadow:
+    0 0 40px var(--season-panel-shadow),
+    0 8px 32px rgba(0, 0, 0, 0.55);
+}
+
+body.theme-summer .menu li a,
+body.theme-winter .menu li a,
+body.theme-autumn .menu li a,
+body.theme-spring .menu li a,
+body.theme-summer .footer-links a,
+body.theme-winter .footer-links a,
+body.theme-autumn .footer-links a,
+body.theme-spring .footer-links a,
+body.theme-summer .meme-card h2,
+body.theme-winter .meme-card h2,
+body.theme-autumn .meme-card h2,
+body.theme-spring .meme-card h2 {
+  color: var(--season-highlight);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--season-highlight) 60%, transparent);
+}
+
+body.theme-summer .menu li a:hover,
+body.theme-winter .menu li a:hover,
+body.theme-autumn .menu li a:hover,
+body.theme-spring .menu li a:hover,
+body.theme-summer .footer-links a:hover,
+body.theme-winter .footer-links a:hover,
+body.theme-autumn .footer-links a:hover,
+body.theme-spring .footer-links a:hover,
+body.theme-summer .contract-value,
+body.theme-winter .contract-value,
+body.theme-autumn .contract-value,
+body.theme-spring .contract-value {
+  color: var(--season-accent);
+}
+
+body.theme-summer .menu li a::after,
+body.theme-winter .menu li a::after,
+body.theme-autumn .menu li a::after,
+body.theme-spring .menu li a::after {
+  background: linear-gradient(90deg, var(--season-highlight), var(--season-accent));
+}
+
+body.theme-summer .contract-address,
+body.theme-winter .contract-address,
+body.theme-autumn .contract-address,
+body.theme-spring .contract-address {
+  background: color-mix(in srgb, var(--season-soft-bg) 78%, transparent);
+  border-color: var(--season-chip-border);
+}
+
+body.theme-summer .contract-value,
+body.theme-winter .contract-value,
+body.theme-autumn .contract-value,
+body.theme-spring .contract-value {
+  background: var(--season-chip-bg);
+  border-color: var(--season-chip-border);
+}
+
+body.theme-summer .track-links img:hover,
+body.theme-winter .track-links img:hover,
+body.theme-autumn .track-links img:hover,
+body.theme-spring .track-links img:hover,
+body.theme-summer .meme-grid img:hover,
+body.theme-winter .meme-grid img:hover,
+body.theme-autumn .meme-grid img:hover,
+body.theme-spring .meme-grid img:hover,
+body.theme-summer .meme-grid video:hover,
+body.theme-winter .meme-grid video:hover,
+body.theme-autumn .meme-grid video:hover,
+body.theme-spring .meme-grid video:hover {
+  border-color: var(--season-highlight);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--season-highlight) 45%, transparent);
+}
+
+body.theme-summer .scroll-top-btn,
+body.theme-winter .scroll-top-btn,
+body.theme-autumn .scroll-top-btn,
+body.theme-spring .scroll-top-btn {
+  border-color: var(--season-chip-border);
+  color: var(--season-highlight);
+  background: color-mix(in srgb, var(--season-soft-bg) 86%, transparent);
+}
+
+body.theme-summer .scroll-top-btn:hover,
+body.theme-winter .scroll-top-btn:hover,
+body.theme-autumn .scroll-top-btn:hover,
+body.theme-spring .scroll-top-btn:hover {
+  background: color-mix(in srgb, var(--season-highlight) 20%, transparent);
+  box-shadow: 0 4px 25px color-mix(in srgb, var(--season-highlight) 38%, transparent);
+}
+
+@media (max-width: 768px) {
+  body.theme-summer .copy-ca-btn,
+  body.theme-winter .copy-ca-btn,
+  body.theme-autumn .copy-ca-btn,
+  body.theme-spring .copy-ca-btn {
+    background: linear-gradient(135deg, var(--season-secondary) 0%, var(--season-highlight) 100%);
+    border-color: var(--season-chip-border);
+    box-shadow:
+      0 4px 15px color-mix(in srgb, var(--season-secondary) 35%, transparent),
+      0 0 20px color-mix(in srgb, var(--season-highlight) 30%, transparent);
+  }
+}
+
+/* Summer Revamp Layer */
+@keyframes summerShimmer {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes summerFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes summerPulse {
+  0%, 100% { box-shadow: 0 0 0 rgba(255, 214, 102, 0); }
+  50% { box-shadow: 0 0 28px rgba(255, 214, 102, 0.32); }
+}
+
+body.theme-summer .bgNavSec1 {
+  background:
+    linear-gradient(180deg, rgba(10, 77, 143, 0.35) 0%, rgba(45, 143, 210, 0.3) 55%, rgba(255, 209, 102, 0.38) 100%);
+}
+
+body.theme-summer .section1 {
+  background:
+    linear-gradient(180deg, rgba(8, 84, 150, 0.7) 0%, rgba(56, 189, 248, 0.45) 55%, rgba(255, 209, 102, 0.42) 100%);
+}
+
+body.theme-summer .section3 {
+  background:
+    linear-gradient(180deg, rgba(9, 85, 154, 0.74) 0%, rgba(34, 211, 238, 0.45) 46%, rgba(250, 204, 21, 0.35) 100%);
+}
+
+body.theme-summer .section5,
+body.theme-summer .section6 {
+  background:
+    linear-gradient(180deg, rgba(10, 77, 143, 0.5) 0%, rgba(14, 165, 233, 0.38) 52%, rgba(251, 191, 36, 0.25) 100%);
+}
+
+body.theme-summer .section2,
+body.theme-summer .section4 {
+  background: linear-gradient(90deg, rgba(14, 116, 144, 0.46) 0%, rgba(34, 211, 238, 0.38) 50%, rgba(56, 189, 248, 0.46) 100%);
+}
+
+body.theme-summer .navbar,
+body.theme-summer .section1_combined,
+body.theme-summer #dexscreener-embed,
+body.theme-summer #integrated-terminal,
+body.theme-summer #bubblemaps-embed,
+body.theme-summer .track-card,
+body.theme-summer .meme-card,
+body.theme-summer .gifs-on-x-banner,
+body.theme-summer footer {
+  background-size: 180% 180%;
+  animation: summerShimmer 16s ease-in-out infinite;
+}
+
+body.theme-summer .section1_combined:hover,
+body.theme-summer #dexscreener-embed:hover,
+body.theme-summer #integrated-terminal:hover,
+body.theme-summer #bubblemaps-embed:hover,
+body.theme-summer .track-card:hover,
+body.theme-summer .meme-card:hover,
+body.theme-summer .gifs-on-x-banner:hover {
+  animation: summerShimmer 12s ease-in-out infinite, summerFloat 5s ease-in-out infinite;
+}
+
+body.theme-summer .section1_combined::before {
+  content: 'Summer Station';
+  color: rgba(255, 238, 170, 0.96);
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+body.theme-summer #dexscreener-embed::before {
+  content: 'BEACH CHART';
+  color: rgba(255, 245, 182, 0.95);
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+body.theme-summer #integrated-terminal::before {
+  content: 'SUMMER SWAP';
+  color: rgba(255, 245, 182, 0.95);
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+body.theme-summer #bubblemaps-embed::before {
+  content: 'HEATMAP';
+  color: rgba(255, 245, 182, 0.95);
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+body.theme-summer .track-card::before {
+  content: 'Beach Links';
+  color: rgba(255, 245, 182, 0.95);
+  text-shadow: 0 0 12px rgba(250, 204, 21, 0.6);
+}
+
+body.theme-summer .menu li a,
+body.theme-summer .footer-links a,
+body.theme-summer .contract-label,
+body.theme-summer .gifs-on-x-banner p,
+body.theme-summer .footer-credits,
+body.theme-summer .footer-disclaimer {
+  color: #fff8dd !important;
+}
+
+body.theme-summer .slider:hover .slides img.active {
+  filter: brightness(1.12)
+    saturate(1.14)
+    drop-shadow(0 0 20px rgba(250, 204, 21, 0.38))
+    drop-shadow(0 0 46px rgba(34, 211, 238, 0.22));
+}
+
+body.theme-summer .copy-feedback {
+  background: rgba(250, 204, 21, 0.92);
+  color: #073b4c;
+}
+
+body.theme-summer .scroll-top-btn.visible {
+  animation: summerPulse 2.8s ease-in-out infinite;
+}
+
+body.theme-summer .track-links img {
+  border-color: rgba(255, 239, 190, 0.26);
+  background: rgba(7, 56, 90, 0.34);
+}
+
+body.theme-summer .track-links img:hover {
+  transform: scale(1.15) translateY(-8px) rotate(-3deg);
+}
+
+@media (max-width: 768px) {
+  body.theme-summer .section3 {
+    min-height: 190vh;
+  }
+
+  body.theme-summer .track-card::before,
+  body.theme-summer #dexscreener-embed::before,
+  body.theme-summer #integrated-terminal::before,
+  body.theme-summer #bubblemaps-embed::before {
+    letter-spacing: 1px;
+  }
+}

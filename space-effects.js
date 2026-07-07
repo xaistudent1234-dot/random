@@ -1,17 +1,22 @@
-// Space Effects - Stars, Planets, and Starships
-class SpaceScene {
+// Seasonal background effects. Summer mode renders sun, clouds, waves, and beach objects.
+class SeasonalScene {
     constructor() {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
+        this.mode = 'summer';
+        this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
         this.stars = [];
-        this.planets = [];
-        this.starships = [];
-        this.shootingStars = [];
+        this.clouds = [];
+        this.sparkles = [];
+        this.waveLines = [];
+        this.floaters = [];
+        this.gulls = [];
+
         this.init();
     }
 
     init() {
-        // Set up canvas
         this.canvas.id = 'space-canvas';
         this.canvas.style.position = 'fixed';
         this.canvas.style.top = '0';
@@ -23,21 +28,23 @@ class SpaceScene {
         document.body.insertBefore(this.canvas, document.body.firstChild);
 
         this.resize();
-        window.addEventListener('resize', () => this.resize());
+        this.mode = this.detectThemeMode();
+        this.seedByMode();
 
-        // Create stars
-        this.createStars(150);
-        
-        // Create planets
-        this.createPlanets();
-        
-        // Create starships
-        this.createStarship();
-        
-        // Create initial shooting star
-        this.createShootingStar();
-        
-        // Start animation
+        window.addEventListener('resize', () => {
+            this.resize();
+            this.seedByMode();
+        });
+
+        const observer = new MutationObserver(() => {
+            const nextMode = this.detectThemeMode();
+            if (nextMode !== this.mode) {
+                this.mode = nextMode;
+                this.seedByMode();
+            }
+        });
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
         this.animate();
     }
 
@@ -46,353 +53,350 @@ class SpaceScene {
         this.canvas.height = window.innerHeight;
     }
 
-    createStars(count) {
-        for (let i = 0; i < count; i++) {
+    detectThemeMode() {
+        const bodyClass = document.body.className;
+        if (bodyClass.includes('theme-original')) {
+            return 'original';
+        }
+        if (bodyClass.includes('theme-winter')) {
+            return 'winter';
+        }
+        if (bodyClass.includes('theme-autumn')) {
+            return 'autumn';
+        }
+        if (bodyClass.includes('theme-spring')) {
+            return 'spring';
+        }
+        return 'summer';
+    }
+
+    random(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    seedByMode() {
+        this.stars = [];
+        this.clouds = [];
+        this.sparkles = [];
+        this.waveLines = [];
+        this.floaters = [];
+        this.gulls = [];
+
+        if (this.mode === 'original') {
+            this.seedOriginal();
+            return;
+        }
+
+        const cloudCount = this.reducedMotion ? 4 : 8;
+        for (let i = 0; i < cloudCount; i++) {
+            this.clouds.push({
+                x: this.random(-220, this.canvas.width + 220),
+                y: this.random(40, this.canvas.height * 0.5),
+                size: this.random(55, 130),
+                speed: this.random(0.08, 0.24),
+                alpha: this.random(0.2, 0.42)
+            });
+        }
+
+        const sparkleCount = this.reducedMotion ? 18 : 42;
+        for (let i = 0; i < sparkleCount; i++) {
+            this.sparkles.push({
+                x: this.random(0, this.canvas.width),
+                y: this.random(this.canvas.height * 0.08, this.canvas.height * 0.95),
+                r: this.random(1, 3),
+                phase: this.random(0, Math.PI * 2),
+                drift: this.random(0.08, 0.22)
+            });
+        }
+
+        for (let i = 0; i < 3; i++) {
+            this.waveLines.push({
+                y: this.canvas.height * (0.7 + i * 0.06),
+                amp: 6 + i * 3,
+                len: 0.01 + i * 0.004,
+                speed: 0.014 + i * 0.005,
+                width: 1.4 + i
+            });
+        }
+
+        const floaterCount = this.reducedMotion ? 4 : 8;
+        const floaterKinds = ['beachball', 'cocktail', 'boat', 'yacht'];
+        for (let i = 0; i < floaterCount; i++) {
+            this.floaters.push({
+                x: this.random(20, this.canvas.width - 20),
+                y: this.random(this.canvas.height * 0.58, this.canvas.height * 0.9),
+                size: this.random(16, 30),
+                type: floaterKinds[i % floaterKinds.length],
+                phase: this.random(0, Math.PI * 2),
+                speed: this.random(0.008, 0.018),
+                driftX: this.random(0.08, 0.28)
+            });
+        }
+
+        const gullCount = this.reducedMotion ? 2 : 4;
+        for (let i = 0; i < gullCount; i++) {
+            this.gulls.push({
+                x: this.random(-200, this.canvas.width),
+                y: this.random(70, this.canvas.height * 0.35),
+                speed: this.random(0.3, 0.7),
+                flap: this.random(0, Math.PI * 2)
+            });
+        }
+    }
+
+    seedOriginal() {
+        const starCount = this.reducedMotion ? 70 : 130;
+        for (let i = 0; i < starCount; i++) {
             this.stars.push({
-                x: Math.random() * this.canvas.width,
-                y: Math.random() * this.canvas.height,
-                size: Math.random() * 2.5 + 0.5,
-                baseSize: Math.random() * 2.5 + 0.5,
-                speed: Math.random() * 0.5 + 0.1,
-                glowPhase: Math.random() * Math.PI * 2,
-                glowSpeed: Math.random() * 0.02 + 0.01,
-                opacity: Math.random() * 0.5 + 0.5
+                x: this.random(0, this.canvas.width),
+                y: this.random(0, this.canvas.height),
+                size: this.random(0.5, 2.2),
+                alpha: this.random(0.25, 0.95),
+                phase: this.random(0, Math.PI * 2)
             });
         }
     }
 
-    createPlanets() {
-        const planetTypes = [
-            { colors: ['#ff6b35', '#f7931e', '#fdc830'], size: 80, hasRings: false },
-            { colors: ['#4facfe', '#00f2fe'], size: 100, hasRings: true },
-            { colors: ['#fa709a', '#fee140'], size: 60, hasRings: false },
-            { colors: ['#30cfd0', '#330867'], size: 90, hasRings: false },
-            { colors: ['#a8edea', '#fed6e3'], size: 70, hasRings: false }
-        ];
-
-        // Create 3-5 planets at random positions
-        const planetCount = Math.floor(Math.random() * 3) + 3;
-        for (let i = 0; i < planetCount; i++) {
-            const type = planetTypes[Math.floor(Math.random() * planetTypes.length)];
-            const x = Math.random() * this.canvas.width;
-            const y = Math.random() * this.canvas.height;
-            
-            this.planets.push({
-                x: x,
-                y: y,
-                baseX: x,
-                baseY: y,
-                size: type.size,
-                colors: type.colors,
-                hasRings: type.hasRings,
-                rotation: Math.random() * Math.PI * 2,
-                rotationSpeed: (Math.random() - 0.5) * 0.002,
-                floatPhase: Math.random() * Math.PI * 2,
-                floatSpeed: Math.random() * 0.001 + 0.0005
-            });
-        }
-    }
-
-    createStarship() {
-        const startY = Math.random() * this.canvas.height;
-        this.starships.push({
-            x: -100,
-            y: startY,
-            width: 60,
-            height: 25,
-            speed: Math.random() * 3 + 2,
-            trailOpacity: 1,
-            angle: (Math.random() - 0.5) * 0.3
-        });
-    }
-
-    drawStar(star) {
-        const glowIntensity = (Math.sin(star.glowPhase) + 1) / 2;
-        star.size = star.baseSize * (0.8 + glowIntensity * 0.4);
-        
-        this.ctx.save();
-        
-        // Outer glow
-        const gradient = this.ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, star.size * 4);
-        gradient.addColorStop(0, `rgba(255, 255, 255, ${star.opacity * glowIntensity * 0.8})`);
-        gradient.addColorStop(0.3, `rgba(200, 220, 255, ${star.opacity * glowIntensity * 0.4})`);
-        gradient.addColorStop(1, 'rgba(150, 180, 255, 0)');
-        
-        this.ctx.fillStyle = gradient;
-        this.ctx.beginPath();
-        this.ctx.arc(star.x, star.y, star.size * 4, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // Core star
-        this.ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
-        this.ctx.beginPath();
-        this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // Twinkle effect
-        if (glowIntensity > 0.7) {
-            this.ctx.strokeStyle = `rgba(255, 255, 255, ${(glowIntensity - 0.7) * star.opacity})`;
-            this.ctx.lineWidth = 1;
+    drawOriginal() {
+        for (const star of this.stars) {
+            const twinkle = (Math.sin(star.phase) + 1) * 0.5;
+            this.ctx.fillStyle = `rgba(220, 238, 255, ${star.alpha * (0.45 + twinkle * 0.55)})`;
             this.ctx.beginPath();
-            this.ctx.moveTo(star.x - star.size * 3, star.y);
-            this.ctx.lineTo(star.x + star.size * 3, star.y);
-            this.ctx.moveTo(star.x, star.y - star.size * 3);
-            this.ctx.lineTo(star.x, star.y + star.size * 3);
+            this.ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            this.ctx.fill();
+            star.phase += 0.015;
+        }
+    }
+
+    drawSun(time) {
+        const x = this.canvas.width * 0.86;
+        const y = this.canvas.height * 0.14;
+        const pulse = 1 + Math.sin(time * 0.0014) * 0.04;
+        const radius = Math.min(this.canvas.width, this.canvas.height) * 0.08 * pulse;
+
+        const glow = this.ctx.createRadialGradient(x, y, radius * 0.2, x, y, radius * 3.6);
+        glow.addColorStop(0, 'rgba(255, 234, 143, 0.85)');
+        glow.addColorStop(0.3, 'rgba(255, 204, 86, 0.45)');
+        glow.addColorStop(1, 'rgba(255, 204, 86, 0)');
+        this.ctx.fillStyle = glow;
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, radius * 3.6, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        this.ctx.fillStyle = '#ffd54f';
+        this.ctx.beginPath();
+        this.ctx.arc(x, y, radius, 0, Math.PI * 2);
+        this.ctx.fill();
+    }
+
+    drawCloud(cloud) {
+        this.ctx.save();
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${cloud.alpha})`;
+
+        this.ctx.beginPath();
+        this.ctx.arc(cloud.x, cloud.y, cloud.size * 0.48, 0, Math.PI * 2);
+        this.ctx.arc(cloud.x + cloud.size * 0.36, cloud.y - cloud.size * 0.16, cloud.size * 0.36, 0, Math.PI * 2);
+        this.ctx.arc(cloud.x + cloud.size * 0.72, cloud.y, cloud.size * 0.42, 0, Math.PI * 2);
+        this.ctx.fill();
+
+        this.ctx.restore();
+
+        cloud.x += cloud.speed;
+        if (cloud.x > this.canvas.width + cloud.size * 1.3) {
+            cloud.x = -cloud.size * 1.4;
+            cloud.y = this.random(40, this.canvas.height * 0.45);
+        }
+    }
+
+    drawSparkles(time) {
+        for (const sparkle of this.sparkles) {
+            const shimmer = 0.5 + Math.sin(time * 0.002 + sparkle.phase) * 0.5;
+            const r = sparkle.r * (0.75 + shimmer * 0.6);
+            this.ctx.fillStyle = `rgba(255, 249, 214, ${0.12 + shimmer * 0.48})`;
+            this.ctx.beginPath();
+            this.ctx.arc(sparkle.x, sparkle.y, r, 0, Math.PI * 2);
+            this.ctx.fill();
+
+            sparkle.phase += sparkle.drift * 0.02;
+            sparkle.y += Math.sin(sparkle.phase) * 0.1;
+        }
+    }
+
+    drawWaves(time) {
+        for (const wave of this.waveLines) {
+            this.ctx.beginPath();
+            this.ctx.strokeStyle = `rgba(201, 248, 255, ${0.22 + wave.width * 0.05})`;
+            this.ctx.lineWidth = wave.width;
+
+            for (let x = 0; x <= this.canvas.width; x += 6) {
+                const y = wave.y + Math.sin(x * wave.len + time * wave.speed) * wave.amp;
+                if (x === 0) {
+                    this.ctx.moveTo(x, y);
+                } else {
+                    this.ctx.lineTo(x, y);
+                }
+            }
+
             this.ctx.stroke();
         }
-        
-        this.ctx.restore();
-        
-        star.glowPhase += star.glowSpeed;
     }
 
-    drawPlanet(planet) {
-        this.ctx.save();
-        
-        // Floating animation
-        const floatOffset = Math.sin(planet.floatPhase) * 10;
-        const currentX = planet.baseX;
-        const currentY = planet.baseY + floatOffset;
-        
-        // Shadow/glow behind planet
-        const shadowGradient = this.ctx.createRadialGradient(
-            currentX, currentY, planet.size * 0.8,
-            currentX, currentY, planet.size * 1.5
-        );
-        shadowGradient.addColorStop(0, 'rgba(0, 0, 0, 0)');
-        shadowGradient.addColorStop(1, 'rgba(0, 0, 0, 0.5)');
-        
-        this.ctx.fillStyle = shadowGradient;
-        this.ctx.beginPath();
-        this.ctx.arc(currentX + 5, currentY + 5, planet.size * 1.5, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // Planet body
-        const planetGradient = this.ctx.createRadialGradient(
-            currentX - planet.size * 0.3, currentY - planet.size * 0.3, planet.size * 0.1,
-            currentX, currentY, planet.size
-        );
-        
-        planet.colors.forEach((color, i) => {
-            planetGradient.addColorStop(i / (planet.colors.length - 1), color);
-        });
-        
-        this.ctx.fillStyle = planetGradient;
-        this.ctx.beginPath();
-        this.ctx.arc(currentX, currentY, planet.size, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // Rings if applicable
-        if (planet.hasRings) {
-            this.ctx.save();
-            this.ctx.translate(currentX, currentY);
-            this.ctx.rotate(planet.rotation);
-            
-            const ringGradient = this.ctx.createLinearGradient(0, -planet.size * 1.5, 0, planet.size * 1.5);
-            ringGradient.addColorStop(0, 'rgba(200, 200, 220, 0)');
-            ringGradient.addColorStop(0.3, 'rgba(200, 200, 220, 0.6)');
-            ringGradient.addColorStop(0.5, 'rgba(220, 220, 240, 0.8)');
-            ringGradient.addColorStop(0.7, 'rgba(200, 200, 220, 0.6)');
-            ringGradient.addColorStop(1, 'rgba(200, 200, 220, 0)');
-            
-            this.ctx.fillStyle = ringGradient;
-            this.ctx.beginPath();
-            this.ctx.ellipse(0, 0, planet.size * 1.6, planet.size * 0.3, 0, 0, Math.PI * 2);
-            this.ctx.fill();
-            
-            this.ctx.restore();
+    drawFloaters(time) {
+        for (const floater of this.floaters) {
+            const bob = Math.sin(time * floater.speed + floater.phase) * 8;
+            const x = floater.x;
+            const y = floater.y + bob;
+
+            if (floater.type === 'beachball') {
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.78)';
+                this.ctx.beginPath();
+                this.ctx.arc(x, y, floater.size * 0.65, 0, Math.PI * 2);
+                this.ctx.fill();
+
+                this.ctx.lineWidth = 2;
+                this.ctx.strokeStyle = 'rgba(251, 146, 60, 0.92)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x - floater.size * 0.65, y);
+                this.ctx.lineTo(x + floater.size * 0.65, y);
+                this.ctx.stroke();
+
+                this.ctx.strokeStyle = 'rgba(34, 211, 238, 0.9)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y - floater.size * 0.65);
+                this.ctx.lineTo(x, y + floater.size * 0.65);
+                this.ctx.stroke();
+            } else if (floater.type === 'cocktail') {
+                this.ctx.strokeStyle = 'rgba(255, 245, 200, 0.92)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y - floater.size * 0.8);
+                this.ctx.lineTo(x - floater.size * 0.55, y + floater.size * 0.15);
+                this.ctx.lineTo(x + floater.size * 0.55, y + floater.size * 0.15);
+                this.ctx.closePath();
+                this.ctx.stroke();
+
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y + floater.size * 0.15);
+                this.ctx.lineTo(x, y + floater.size * 0.75);
+                this.ctx.stroke();
+
+                this.ctx.beginPath();
+                this.ctx.moveTo(x - floater.size * 0.2, y + floater.size * 0.75);
+                this.ctx.lineTo(x + floater.size * 0.2, y + floater.size * 0.75);
+                this.ctx.stroke();
+
+                this.ctx.strokeStyle = 'rgba(255, 120, 80, 0.95)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x + floater.size * 0.2, y - floater.size * 0.75);
+                this.ctx.lineTo(x + floater.size * 0.45, y - floater.size * 1.05);
+                this.ctx.stroke();
+            } else if (floater.type === 'boat') {
+                this.ctx.fillStyle = 'rgba(255, 192, 99, 0.9)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x - floater.size * 0.8, y + floater.size * 0.3);
+                this.ctx.lineTo(x + floater.size * 0.8, y + floater.size * 0.3);
+                this.ctx.lineTo(x + floater.size * 0.55, y + floater.size * 0.75);
+                this.ctx.lineTo(x - floater.size * 0.55, y + floater.size * 0.75);
+                this.ctx.closePath();
+                this.ctx.fill();
+
+                this.ctx.strokeStyle = 'rgba(255, 250, 220, 0.95)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y + floater.size * 0.3);
+                this.ctx.lineTo(x, y - floater.size * 0.8);
+                this.ctx.stroke();
+
+                this.ctx.fillStyle = 'rgba(255, 247, 210, 0.94)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x, y - floater.size * 0.8);
+                this.ctx.lineTo(x + floater.size * 0.6, y - floater.size * 0.3);
+                this.ctx.lineTo(x, y - floater.size * 0.3);
+                this.ctx.closePath();
+                this.ctx.fill();
+            } else if (floater.type === 'yacht') {
+                this.ctx.fillStyle = 'rgba(230, 244, 255, 0.95)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x - floater.size, y + floater.size * 0.45);
+                this.ctx.lineTo(x + floater.size * 0.9, y + floater.size * 0.45);
+                this.ctx.lineTo(x + floater.size * 0.5, y + floater.size * 0.82);
+                this.ctx.lineTo(x - floater.size * 0.65, y + floater.size * 0.82);
+                this.ctx.closePath();
+                this.ctx.fill();
+
+                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                this.ctx.fillRect(x - floater.size * 0.25, y - floater.size * 0.1, floater.size * 0.7, floater.size * 0.22);
+
+                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.96)';
+                this.ctx.lineWidth = 2;
+                this.ctx.beginPath();
+                this.ctx.moveTo(x + floater.size * 0.1, y - floater.size * 0.12);
+                this.ctx.lineTo(x + floater.size * 0.1, y - floater.size * 0.9);
+                this.ctx.stroke();
+
+                this.ctx.fillStyle = 'rgba(173, 230, 255, 0.9)';
+                this.ctx.beginPath();
+                this.ctx.moveTo(x + floater.size * 0.1, y - floater.size * 0.9);
+                this.ctx.lineTo(x + floater.size * 0.55, y - floater.size * 0.45);
+                this.ctx.lineTo(x + floater.size * 0.1, y - floater.size * 0.45);
+                this.ctx.closePath();
+                this.ctx.fill();
+            }
+
+            floater.x += floater.driftX;
+            if (floater.x > this.canvas.width + floater.size * 2) {
+                floater.x = -floater.size * 2;
+                floater.y = this.random(this.canvas.height * 0.58, this.canvas.height * 0.9);
+            }
         }
-        
-        // Atmospheric glow
-        const glowGradient = this.ctx.createRadialGradient(
-            currentX, currentY, planet.size * 0.95,
-            currentX, currentY, planet.size * 1.1
-        );
-        glowGradient.addColorStop(0, 'rgba(255, 255, 255, 0.1)');
-        glowGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-        
-        this.ctx.fillStyle = glowGradient;
-        this.ctx.beginPath();
-        this.ctx.arc(currentX, currentY, planet.size * 1.1, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        this.ctx.restore();
-        
-        planet.rotation += planet.rotationSpeed;
-        planet.floatPhase += planet.floatSpeed;
     }
 
-    drawStarship(ship) {
-        this.ctx.save();
-        this.ctx.translate(ship.x, ship.y);
-        this.ctx.rotate(ship.angle);
-        
-        // Engine trail
-        const trailGradient = this.ctx.createLinearGradient(-50, 0, 0, 0);
-        trailGradient.addColorStop(0, 'rgba(100, 150, 255, 0)');
-        trailGradient.addColorStop(0.5, `rgba(150, 200, 255, ${ship.trailOpacity * 0.5})`);
-        trailGradient.addColorStop(1, `rgba(255, 255, 255, ${ship.trailOpacity})`);
-        
-        this.ctx.fillStyle = trailGradient;
-        this.ctx.fillRect(-50, -5, 50, 10);
-        
-        // Additional trail particles
-        for (let i = 0; i < 3; i++) {
-            const offset = i * 15;
-            const particleGradient = this.ctx.createRadialGradient(-offset - 20, 0, 0, -offset - 20, 0, 8);
-            particleGradient.addColorStop(0, `rgba(150, 200, 255, ${ship.trailOpacity * 0.6})`);
-            particleGradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
-            
-            this.ctx.fillStyle = particleGradient;
+    drawGulls(time) {
+        for (const gull of this.gulls) {
+            const flap = Math.sin(time * 0.008 + gull.flap) * 5;
+            this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+            this.ctx.lineWidth = 1.5;
             this.ctx.beginPath();
-            this.ctx.arc(-offset - 20, Math.sin(Date.now() * 0.01 + i) * 3, 8, 0, Math.PI * 2);
-            this.ctx.fill();
+            this.ctx.moveTo(gull.x - 12, gull.y);
+            this.ctx.quadraticCurveTo(gull.x - 6, gull.y - flap, gull.x, gull.y);
+            this.ctx.quadraticCurveTo(gull.x + 6, gull.y - flap, gull.x + 12, gull.y);
+            this.ctx.stroke();
+
+            gull.x += gull.speed;
+            if (gull.x > this.canvas.width + 20) {
+                gull.x = -40;
+                gull.y = this.random(60, this.canvas.height * 0.34);
+            }
         }
-        
-        // Starship body
-        this.ctx.fillStyle = '#c0c0c0';
-        this.ctx.beginPath();
-        this.ctx.moveTo(ship.width / 2, 0);
-        this.ctx.lineTo(-ship.width / 2, -ship.height / 2);
-        this.ctx.lineTo(-ship.width / 3, 0);
-        this.ctx.lineTo(-ship.width / 2, ship.height / 2);
-        this.ctx.closePath();
-        this.ctx.fill();
-        
-        // Cockpit window
-        this.ctx.fillStyle = '#4facfe';
-        this.ctx.beginPath();
-        this.ctx.arc(ship.width / 4, 0, 5, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        // Wing highlights
-        this.ctx.strokeStyle = '#ffffff';
-        this.ctx.lineWidth = 2;
-        this.ctx.beginPath();
-        this.ctx.moveTo(ship.width / 2, 0);
-        this.ctx.lineTo(0, 0);
-        this.ctx.stroke();
-        
-        this.ctx.restore();
-        
-        // Update position
-        ship.x += ship.speed;
     }
 
-    createShootingStar() {
-        const startX = Math.random() * this.canvas.width;
-        const startY = Math.random() * this.canvas.height * 0.6;
-        const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.5;
-        const speed = Math.random() * 8 + 4;
-        
-        this.shootingStars.push({
-            x: startX,
-            y: startY,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            length: Math.random() * 80 + 40,
-            brightness: 1,
-            tail: []
-        });
-    }
-
-    drawShootingStar(star) {
-        this.ctx.save();
-        
-        // Add current position to tail
-        star.tail.push({ x: star.x, y: star.y });
-        if (star.tail.length > 15) {
-            star.tail.shift();
-        }
-        
-        // Draw glowing trail
-        star.tail.forEach((pos, i) => {
-            const progress = i / star.tail.length;
-            const opacity = progress * star.brightness;
-            const size = (3 + progress * 4) * star.brightness;
-            
-            // Outer glow
-            const glowGradient = this.ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, size * 3);
-            glowGradient.addColorStop(0, `rgba(255, 255, 255, ${opacity * 0.8})`);
-            glowGradient.addColorStop(0.3, `rgba(200, 230, 255, ${opacity * 0.5})`);
-            glowGradient.addColorStop(0.6, `rgba(150, 200, 255, ${opacity * 0.2})`);
-            glowGradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
-            
-            this.ctx.fillStyle = glowGradient;
-            this.ctx.beginPath();
-            this.ctx.arc(pos.x, pos.y, size * 3, 0, Math.PI * 2);
-            this.ctx.fill();
-            
-            // Core
-            this.ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
-            this.ctx.beginPath();
-            this.ctx.arc(pos.x, pos.y, size * 0.5, 0, Math.PI * 2);
-            this.ctx.fill();
-        });
-        
-        // Draw bright head
-        const headGradient = this.ctx.createRadialGradient(star.x, star.y, 0, star.x, star.y, 12);
-        headGradient.addColorStop(0, `rgba(255, 255, 255, ${star.brightness})`);
-        headGradient.addColorStop(0.2, `rgba(255, 255, 255, ${star.brightness * 0.8})`);
-        headGradient.addColorStop(0.5, `rgba(200, 230, 255, ${star.brightness * 0.4})`);
-        headGradient.addColorStop(1, 'rgba(150, 200, 255, 0)');
-        
-        this.ctx.fillStyle = headGradient;
-        this.ctx.beginPath();
-        this.ctx.arc(star.x, star.y, 12, 0, Math.PI * 2);
-        this.ctx.fill();
-        
-        this.ctx.restore();
-        
-        // Update position
-        star.x += star.vx;
-        star.y += star.vy;
-        
-        // Fade out as it travels
-        star.brightness *= 0.98;
+    drawSummer(time) {
+        this.drawSun(time);
+        this.clouds.forEach((cloud) => this.drawCloud(cloud));
+        this.drawSparkles(time);
+        this.drawWaves(time);
+        this.drawFloaters(time);
+        this.drawGulls(time);
     }
 
     animate() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        
-        // Draw stars
-        this.stars.forEach(star => this.drawStar(star));
-        
-        // Draw planets
-        this.planets.forEach(planet => this.drawPlanet(planet));
-        
-        // Draw and update starships
-        this.starships = this.starships.filter(ship => ship.x < this.canvas.width + 100);
-        this.starships.forEach(ship => this.drawStarship(ship));
-        
-        // Draw and update shooting stars
-        this.shootingStars = this.shootingStars.filter(star => 
-            star.brightness > 0.05 && 
-            star.x < this.canvas.width + 100 && 
-            star.y < this.canvas.height + 100 &&
-            star.x > -100 && star.y > -100
-        );
-        this.shootingStars.forEach(star => this.drawShootingStar(star));
-        
-        // Randomly create new starships
-        if (Math.random() < 0.005 && this.starships.length < 2) {
-            this.createStarship();
+
+        const time = performance.now();
+        if (this.mode === 'original') {
+            this.drawOriginal();
+        } else {
+            this.drawSummer(time);
         }
-        
-        // Randomly create new shooting stars
-        if (Math.random() < 0.01 && this.shootingStars.length < 3) {
-            this.createShootingStar();
-        }
-        
+
         requestAnimationFrame(() => this.animate());
     }
 }
 
-// Initialize when DOM is loaded
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
-        new SpaceScene();
+        new SeasonalScene();
     });
 } else {
-    new SpaceScene();
+    new SeasonalScene();
 }

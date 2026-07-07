@@ -291,6 +291,41 @@ function copyToClipboard() {
 <!-- Tenor embed script (loaded once for all GIFs) -->
 <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
 
+<script>
+    (function() {
+        const THEME_STORAGE_KEY = 'crumbSeasonTheme';
+        const VALID_THEMES = ['original', 'summer', 'winter', 'autumn', 'spring'];
+
+        function applySeasonTheme(themeName) {
+            const theme = VALID_THEMES.includes(themeName) ? themeName : 'original';
+            const body = document.body;
+
+            body.classList.remove('theme-original', 'theme-summer', 'theme-winter', 'theme-autumn', 'theme-spring');
+            body.classList.add(`theme-${theme}`);
+
+            const metaTheme = document.querySelector('meta[name="theme-color"]');
+            if (metaTheme) {
+                metaTheme.setAttribute('content', theme === 'summer' ? '#f59e0b' : '#050a14');
+            }
+        }
+
+        window.setSeasonTheme = function(themeName) {
+            const theme = VALID_THEMES.includes(themeName) ? themeName : 'original';
+            localStorage.setItem(THEME_STORAGE_KEY, theme);
+            applySeasonTheme(theme);
+        };
+
+        window.getSeasonTheme = function() {
+            return localStorage.getItem(THEME_STORAGE_KEY) || 'summer';
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = window.getSeasonTheme();
+            applySeasonTheme(savedTheme);
+        });
+    })();
+</script>
+
 <!-- Scroll to Top Button -->
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">&#8679;</button>
 
