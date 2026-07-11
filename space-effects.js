@@ -12,6 +12,7 @@ class SeasonalScene {
         this.waveLines = [];
         this.floaters = [];
         this.gulls = [];
+        this.floaterImages = this.loadFloaterImages();
 
         this.init();
     }
@@ -74,6 +75,24 @@ class SeasonalScene {
         return Math.random() * (max - min) + min;
     }
 
+    loadFloaterImages() {
+        const sources = {
+            boat1: 'Images/season_icons/boat1.png',
+            boat2: 'Images/season_icons/boat2.png',
+            cocktail: 'Images/season_icons/cocktail.png',
+            volleyball: 'Images/season_icons/volleyball.png'
+        };
+
+        const images = {};
+        for (const [name, src] of Object.entries(sources)) {
+            const img = new Image();
+            img.src = src;
+            images[name] = img;
+        }
+
+        return images;
+    }
+
     seedByMode() {
         this.stars = [];
         this.clouds = [];
@@ -120,12 +139,12 @@ class SeasonalScene {
         }
 
         const floaterCount = this.reducedMotion ? 4 : 8;
-        const floaterKinds = ['beachball', 'cocktail', 'boat', 'yacht'];
+        const floaterKinds = ['boat1', 'boat2', 'cocktail', 'volleyball'];
         for (let i = 0; i < floaterCount; i++) {
             this.floaters.push({
                 x: this.random(20, this.canvas.width - 20),
                 y: this.random(this.canvas.height * 0.58, this.canvas.height * 0.9),
-                size: this.random(16, 30),
+                size: this.random(12, 20),
                 type: floaterKinds[i % floaterKinds.length],
                 phase: this.random(0, Math.PI * 2),
                 speed: this.random(0.008, 0.018),
@@ -243,104 +262,20 @@ class SeasonalScene {
 
     drawFloaters(time) {
         for (const floater of this.floaters) {
-            const bob = Math.sin(time * floater.speed + floater.phase) * 8;
+            const bob = Math.sin(time * floater.speed + floater.phase) * 6;
             const x = floater.x;
             const y = floater.y + bob;
+            const img = this.floaterImages[floater.type];
 
-            if (floater.type === 'beachball') {
-                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.78)';
-                this.ctx.beginPath();
-                this.ctx.arc(x, y, floater.size * 0.65, 0, Math.PI * 2);
-                this.ctx.fill();
+            if (img && img.complete && img.naturalWidth > 0) {
+                const aspect = img.naturalWidth / img.naturalHeight;
+                const drawHeight = floater.size * 1.5;
+                const drawWidth = drawHeight * aspect;
 
-                this.ctx.lineWidth = 2;
-                this.ctx.strokeStyle = 'rgba(251, 146, 60, 0.92)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x - floater.size * 0.65, y);
-                this.ctx.lineTo(x + floater.size * 0.65, y);
-                this.ctx.stroke();
-
-                this.ctx.strokeStyle = 'rgba(34, 211, 238, 0.9)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x, y - floater.size * 0.65);
-                this.ctx.lineTo(x, y + floater.size * 0.65);
-                this.ctx.stroke();
-            } else if (floater.type === 'cocktail') {
-                this.ctx.strokeStyle = 'rgba(255, 245, 200, 0.92)';
-                this.ctx.lineWidth = 2;
-                this.ctx.beginPath();
-                this.ctx.moveTo(x, y - floater.size * 0.8);
-                this.ctx.lineTo(x - floater.size * 0.55, y + floater.size * 0.15);
-                this.ctx.lineTo(x + floater.size * 0.55, y + floater.size * 0.15);
-                this.ctx.closePath();
-                this.ctx.stroke();
-
-                this.ctx.beginPath();
-                this.ctx.moveTo(x, y + floater.size * 0.15);
-                this.ctx.lineTo(x, y + floater.size * 0.75);
-                this.ctx.stroke();
-
-                this.ctx.beginPath();
-                this.ctx.moveTo(x - floater.size * 0.2, y + floater.size * 0.75);
-                this.ctx.lineTo(x + floater.size * 0.2, y + floater.size * 0.75);
-                this.ctx.stroke();
-
-                this.ctx.strokeStyle = 'rgba(255, 120, 80, 0.95)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x + floater.size * 0.2, y - floater.size * 0.75);
-                this.ctx.lineTo(x + floater.size * 0.45, y - floater.size * 1.05);
-                this.ctx.stroke();
-            } else if (floater.type === 'boat') {
-                this.ctx.fillStyle = 'rgba(255, 192, 99, 0.9)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x - floater.size * 0.8, y + floater.size * 0.3);
-                this.ctx.lineTo(x + floater.size * 0.8, y + floater.size * 0.3);
-                this.ctx.lineTo(x + floater.size * 0.55, y + floater.size * 0.75);
-                this.ctx.lineTo(x - floater.size * 0.55, y + floater.size * 0.75);
-                this.ctx.closePath();
-                this.ctx.fill();
-
-                this.ctx.strokeStyle = 'rgba(255, 250, 220, 0.95)';
-                this.ctx.lineWidth = 2;
-                this.ctx.beginPath();
-                this.ctx.moveTo(x, y + floater.size * 0.3);
-                this.ctx.lineTo(x, y - floater.size * 0.8);
-                this.ctx.stroke();
-
-                this.ctx.fillStyle = 'rgba(255, 247, 210, 0.94)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x, y - floater.size * 0.8);
-                this.ctx.lineTo(x + floater.size * 0.6, y - floater.size * 0.3);
-                this.ctx.lineTo(x, y - floater.size * 0.3);
-                this.ctx.closePath();
-                this.ctx.fill();
-            } else if (floater.type === 'yacht') {
-                this.ctx.fillStyle = 'rgba(230, 244, 255, 0.95)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x - floater.size, y + floater.size * 0.45);
-                this.ctx.lineTo(x + floater.size * 0.9, y + floater.size * 0.45);
-                this.ctx.lineTo(x + floater.size * 0.5, y + floater.size * 0.82);
-                this.ctx.lineTo(x - floater.size * 0.65, y + floater.size * 0.82);
-                this.ctx.closePath();
-                this.ctx.fill();
-
-                this.ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
-                this.ctx.fillRect(x - floater.size * 0.25, y - floater.size * 0.1, floater.size * 0.7, floater.size * 0.22);
-
-                this.ctx.strokeStyle = 'rgba(255, 255, 255, 0.96)';
-                this.ctx.lineWidth = 2;
-                this.ctx.beginPath();
-                this.ctx.moveTo(x + floater.size * 0.1, y - floater.size * 0.12);
-                this.ctx.lineTo(x + floater.size * 0.1, y - floater.size * 0.9);
-                this.ctx.stroke();
-
-                this.ctx.fillStyle = 'rgba(173, 230, 255, 0.9)';
-                this.ctx.beginPath();
-                this.ctx.moveTo(x + floater.size * 0.1, y - floater.size * 0.9);
-                this.ctx.lineTo(x + floater.size * 0.55, y - floater.size * 0.45);
-                this.ctx.lineTo(x + floater.size * 0.1, y - floater.size * 0.45);
-                this.ctx.closePath();
-                this.ctx.fill();
+                this.ctx.save();
+                this.ctx.globalAlpha = 0.72;
+                this.ctx.drawImage(img, x - drawWidth / 2, y - drawHeight / 2, drawWidth, drawHeight);
+                this.ctx.restore();
             }
 
             floater.x += floater.driftX;
